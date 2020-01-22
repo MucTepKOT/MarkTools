@@ -8,23 +8,22 @@ def xml_builder(order_dict):
     root = ET.Element("order", elem)
     shoes = ET.SubElement(root, 'shoes')
     productGroupe = ET.SubElement(shoes, 'productGroupe')
-    productGroupe.text = 'shoes'
+    productGroupe.text = order_dict['productGroupe']
     contactPerson = ET.SubElement(shoes, 'contactPerson')
-    contactPerson.text = 'Алексей'
+    contactPerson.text = order_dict['contactPerson']
     releaseMethodType = ET.SubElement(shoes, 'releaseMethodType')
-    releaseMethodType.text = 'REMAINS'
+    releaseMethodType.text = order_dict['releaseMethodType']
     createMethodType = ET.SubElement(shoes, 'createMethodType')
-    createMethodType.text = 'SELF_MADE'
+    createMethodType.text = order_dict['createMethodType']
     contractNumber = ET.SubElement(shoes, 'contractNumber')
-    contractNumber.text = '55909'
+    contractNumber.text = order_dict['contractNumber']
     contractDate = ET.SubElement(shoes, 'contractDate')
-    contractDate.text = '2019-11-04'
+    contractDate.text = order_dict['contractDate']
     products = ET.SubElement(shoes, 'products')
 
-    print(order_dict)
-    print(type(order_dict))
+    
 
-    for key, value in order_dict.items():
+    for key, value in order_dict['products'].items():
         product = ET.Element('product')
         gtin = ET.SubElement(product, 'gtin')
         gtin.text = key
