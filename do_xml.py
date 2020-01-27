@@ -2,7 +2,6 @@ import xml.etree.ElementTree as ET
 
 
 def xml_builder(order_dict):
-    # gtin_list = ['04670033580052', '04670033580113', '04670033580013', '04670033580055']
     elem = {"xmlns": "urn:oms.order", "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation": "urn:oms.order order-v5.0.xsd"}
 
     root = ET.Element("order", elem)
