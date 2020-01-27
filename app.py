@@ -49,16 +49,22 @@ def converter():
 #     return response(200, {"product_code": product_code})
 
 
-@app.route('/post_xml')
+@app.route('/order_codes', methods=['GET'])
 def order_codes():
     return flask.render_template('order_codes.html')
 
-@app.route('/post_xml', methods=['POST'])
-def get_xml():
-    order_dict = flask.request.get_json()
+@app.route('/uploads', methods=['POST'])
+def download():
+    order_dict = flask.request.form.to_dict(flat=False)
+    print(order_dict)
     do_xml.xml_builder(order_dict)
     path = "answer.xml"
     return flask.send_file(path, as_attachment=True)
+
+    # order_dict = flask.request.get_json()
+    # do_xml.xml_builder(order_dict)
+    # path = "answer.xml"
+    # return flask.send_file(path, as_attachment=True)
 
 
 if __name__ == '__main__':
