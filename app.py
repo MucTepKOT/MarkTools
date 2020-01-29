@@ -1,10 +1,11 @@
 import json
 import os
 import flask
-from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename  # нужна ли вообще?
 from openpyxl import load_workbook
 import convert_func
 import do_xml
+import do_xml_from_xlsx
 
 
 UPLOAD_FOLDER = f'{os.getcwd()}\\uploads'
@@ -44,16 +45,20 @@ def converter():
         output_2 = 'Введите продуктовый код'
     return flask.render_template('converter.html', product_code=output_1, id_code=output_2)
 
-@app.route('/order_codes', methods=['GET'])
-def order_codes():
-    return flask.render_template('order_codes.html')
+@app.route('/simple_order', methods=['GET'])
+def simple_order():
+    return flask.render_template('simple_order.html')
+
+@app.route('/order_from_file', methods=['GET'])
+def order_from_file():
+    return flask.render_template('order_from_file.html')
 
 @app.route('/user_input', methods=['POST'])
 def user_input():
     order_dict = flask.request.form.to_dict(flat=False)
     print(order_dict)
     do_xml.xml_builder(order_dict)
-    path = "answer.zip"
+    path = "answer.xls"
     return flask.send_file(path, as_attachment=True)
 
 def allowed_file(filename):
@@ -73,6 +78,10 @@ def parse_xlsx(filepath):
         all_quantity_list.append(str(row.value))
     return [all_gtin_list, all_quantity_list]
 
+def separate_list(lst, n):
+    '''разделяет список на двумерный список в каждом елементе которого n элементов ([1,2,3,4] --> [[1,2],[3,4]] при n=2) '''
+    return [lst[i:i + n] for i in range(0, len(lst), n)]
+
 @app.route('/user_file', methods=['POST'])
 def user_file():
     order_dict = flask.request.form.to_dict(flat=False)
@@ -83,10 +92,29 @@ def user_file():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
         gtin_and_quantity_lists = parse_xlsx(filepath)
-        order_dict['product_code'] = gtin_and_quantity_lists[0]
-        order_dict['quantity'] = gtin_and_quantity_lists[1]
-        do_xml.xml_builder(order_dict)
-        path = "answer.zip"
+        print(len(gtin_and_quantity_lists[0]))
+        print(len(gtin_and_quantity_lists[1]))
+        
+        # разделяем списки с gtin и quantity на мини списки (до 10 элементов в списке)
+        # это нужно, из этих значений далее мы будем формировать "products" в xml 
+        # максимально в "products" может быть 10 "product"
+        separate_gtin_list = separate_list(gtin_and_quantity_lists[0], 10)
+        # print(separate_gtin_list)
+        separate_quantity_list = separate_list(gtin_and_quantity_lists[1], 10)
+        # print(separate_quantity_list)
+        # запаковываем в пары: [список из 10 gtin]:[список из 10 quantity]
+        ten_gtin_and_quantity_pack = zip(separate_gtin_list, separate_quantity_list)
+
+        # циклом проходим по zip'у
+        c = 0
+        for gtin, quantity in ten_gtin_and_quantity_pack:
+            copy_order_dict = order_dict.copy()
+            copy_order_dict['gtin'] = gtin
+            copy_order_dict['quantity'] = quantity
+            do_xml_from_xlsx.zip_xml_builder(copy_order_dict)
+            c += 1
+        print(c)
+        path = "1.xml"
         return flask.send_file(path, as_attachment=True)
     return '404'
 

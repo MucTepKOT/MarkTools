@@ -2,14 +2,17 @@
 <html>
  <head>
   <meta content="charset=utf-8">
-  <title>Маркировка Мечты</title>
+  <title>Marktools v1.0</title>
  </head>
  <body>
    <p>
     <a href="{{ url_for('converter') }}"><b>Конвертер кодов маркировки</b></a>
    </p>
    <p>
-    <a href="{{ url_for('order_codes') }}"><b>Формирование xml для заказа кодов маркировки</b></a>
+    <a href="{{ url_for('simple_order') }}"><b>Сформировать xml для заказа кодов маркировки вручную (до 10 кодов)</b></a>
+   </p>
+   <p>
+    <a href="{{ url_for('order_from_file') }}"><b>Сформировать xml для заказа кодов маркировки из файла (дохуя кодов из xlsx файла)</b></a>
    </p>
  </body>
 </html>

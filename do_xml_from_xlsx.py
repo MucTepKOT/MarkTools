@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-def xml_builder(order_dict):
+def zip_xml_builder(order_dict):
     elem = {"xmlns": "urn:oms.order", "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation": "urn:oms.order order-v5.0.xsd"}
 
     root = ET.Element("order", elem)
@@ -20,6 +20,7 @@ def xml_builder(order_dict):
     products = ET.SubElement(shoes, 'products')
 
     codes_and_quantity = dict(zip(order_dict['gtin'], order_dict['quantity']))
+    # print(codes_and_quantity)
 
     for key, value in codes_and_quantity.items():
         product = ET.Element('product')
