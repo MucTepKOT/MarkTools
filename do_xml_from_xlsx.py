@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
+from datetime import datetime
 
-def zip_xml_builder(order_dict):
+def some_xml_builder(order_dict):
     elem = {"xmlns": "urn:oms.order", "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation": "urn:oms.order order-v5.0.xsd"}
 
     root = ET.Element("order", elem)
@@ -35,4 +36,6 @@ def zip_xml_builder(order_dict):
         products.append(product)
 
     tree = ET.ElementTree(root)
-    tree.write('answer.xml', encoding="utf-8")
+
+    name_tail = datetime.now()
+    tree.write(f'answer_{name_tail}.xml', encoding="utf-8")

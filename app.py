@@ -111,10 +111,10 @@ def user_file():
             copy_order_dict = order_dict.copy()
             copy_order_dict['gtin'] = gtin
             copy_order_dict['quantity'] = quantity
-            do_xml_from_xlsx.zip_xml_builder(copy_order_dict)
+            do_xml_from_xlsx.some_xml_builder(copy_order_dict)
             c += 1
         print(c)
-        path = "1.xml"
+        path = "answer.zip"
         return flask.send_file(path, as_attachment=True)
     return '404'
 
