@@ -1,14 +1,15 @@
 import json
 import os
+import shutil
 import flask
-from werkzeug.utils import secure_filename  # нужна ли вообще?
+from werkzeug.utils import secure_filename  # не нужна, но оставлю для себя
 from openpyxl import load_workbook
 import convert_func
 import do_xml
 import do_xml_from_xlsx
 
 
-UPLOAD_FOLDER = f'{os.getcwd()}\\uploads'
+UPLOAD_FOLDER = f'{os.getcwd()}/uploads'
 ALLOWED_EXTENSIONS = set(['xlsx'])
 
 app = flask.Flask(__name__)
@@ -105,15 +106,23 @@ def user_file():
         # запаковываем в пары: [список из 10 gtin]:[список из 10 quantity]
         ten_gtin_and_quantity_pack = zip(separate_gtin_list, separate_quantity_list)
 
+        
+        filepath = os.path.join(os.getcwd(), 'answers_dir')
         # циклом проходим по zip'у
         c = 0
         for gtin, quantity in ten_gtin_and_quantity_pack:
             copy_order_dict = order_dict.copy()
             copy_order_dict['gtin'] = gtin
             copy_order_dict['quantity'] = quantity
-            do_xml_from_xlsx.some_xml_builder(copy_order_dict)
+            do_xml_from_xlsx.some_xml_builder(filepath, copy_order_dict)
             c += 1
-        print(c)
+        shutil.make_archive('answer', 'zip', root_dir=os.getcwd(), base_dir=filepath)
+        os.chdir('answers_dir')
+        shutil.rmtree(os.getcwd())
+        os.chdir('..')
+        print(os.getcwd())
+        os.makedirs('answers_dir')
+        # print(c)
         path = "answer.zip"
         return flask.send_file(path, as_attachment=True)
     return '404'

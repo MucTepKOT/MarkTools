@@ -1,7 +1,9 @@
 import xml.etree.ElementTree as ET
-from datetime import datetime
+import time
+import os
+import shutil
 
-def some_xml_builder(order_dict):
+def some_xml_builder(filepath, order_dict):
     elem = {"xmlns": "urn:oms.order", "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation": "urn:oms.order order-v5.0.xsd"}
 
     root = ET.Element("order", elem)
@@ -37,5 +39,6 @@ def some_xml_builder(order_dict):
 
     tree = ET.ElementTree(root)
 
-    name_tail = datetime.now()
-    tree.write(f'answer_{name_tail}.xml', encoding="utf-8")
+    filename = f'{time.time()}'
+    tree.write(f'{os.path.join(filepath, filename)}.xml', encoding="utf-8")
+    
