@@ -74,10 +74,10 @@ def parse_xlsx(filepath):
     all_gtin_list = []
     all_quantity = ws['B']
     all_quantity_list = []
-    for row in all_gtin[1:-1]:
+    for row in all_gtin[1:]:
         gtin_with_lead_zero = str(row.value).zfill(14)
         all_gtin_list.append(gtin_with_lead_zero)
-    for row in all_quantity[1:-1]:
+    for row in all_quantity[1:]:
         all_quantity_list.append(str(row.value))
     return [all_gtin_list, all_quantity_list]
 
@@ -136,4 +136,4 @@ def template():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=41312)
+    app.run(debug=False, host='0.0.0.0', port=5050)
