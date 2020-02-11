@@ -69,13 +69,13 @@ def allowed_file(filename):
 def parse_xlsx(filepath):
     '''парсим excle файл, два поля gtin и quantity'''
     wb = load_workbook(filepath)
-    ws = wb['Данные']
+    ws = wb['Sheet1']
     all_gtin = ws['A']
     all_gtin_list = []
     all_quantity = ws['B']
     all_quantity_list = []
     for row in all_gtin[1:-1]:
-        gtin_with_lead_zero = string.zfill(str(row.value), 1)
+        gtin_with_lead_zero = str(row.value).zfill(14)
         all_gtin_list.append(gtin_with_lead_zero)
     for row in all_quantity[1:-1]:
         all_quantity_list.append(str(row.value))
@@ -128,6 +128,11 @@ def user_file():
         path = "answer.zip"
         return flask.send_file(path, as_attachment=True)
     return '404'
+
+@app.route('/template', methods=['GET'])
+def template():
+    path = 'template.xlsx'
+    return flask.send_file(path, as_attachment=True)
 
 
 if __name__ == '__main__':

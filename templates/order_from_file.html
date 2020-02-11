@@ -9,14 +9,40 @@
   <!-- Комментарий -->
     <form action="{{ url_for('user_file') }}" method="POST", enctype="multipart/form-data">
       <h4>Основные поля</h4>
-      <p>productGroupe <input type="text" name="productGroupe"></p>
+      <!-- <p>productGroupe <input type="text" name="productGroupe"></p> -->
+      <p>
+      <label for="productGroupe">productGroupe:</label>
+      <select id="productGroupe" required name="productGroupe">
+        <option selected disabled>Выберите из списка</option>
+        <option value="SHOES">SHOES</option>
+      </select>
+      </p>
       <p>contactPerson <input type="text" name="contactPerson"></p>
-      <p>releaseMethodType <input type="text" name="releaseMethodType"></p>
-      <p>createMethodType <input type="text" name="createMethodType"></p>
+      <p>
+        <label for="releaseMethodType">releaseMethodType:</label>
+        <select id="releaseMethodType" required name="releaseMethodType">
+          <option selected disabled>Выберите из списка</option>
+          <option value="REMAINS">REMAINS</option>
+        </select>
+      </p>
+      <p>
+        <label for="createMethodType">createMethodType:</label>
+        <select id="createMethodType" required name="createMethodType">
+          <option selected disabled>Выберите из списка</option>
+          <option value="SELF-MADE">SELF-MADE</option>
+        </select>
+      </p>
+      <!-- <p>releaseMethodType <input type="text" name="releaseMethodType"></p> -->
+      <!-- <p>createMethodType <input type="text" name="createMethodType"></p> -->
       <p>contractNumber <input type="text" name="contractNumber"></p>
-      <p>contractDate <input type="text" name="contractDate"></p>
+      <p>contractDate <input type="date" name="contractDate"></p>
       <input type="file" name="file" >
       <input type="submit" value="Сформировать xml из файла">
+    </form>
+  </p>
+  <p>
+    <form action="{{ url_for('template') }}" method="GET", enctype="multipart/form-data">
+      <input type="submit" value="Скачать шаблон">
     </form>
   </p>
   <p>
