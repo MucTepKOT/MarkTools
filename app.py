@@ -10,7 +10,7 @@ import do_xml_from_xlsx
 
 
 UPLOAD_FOLDER = f'{os.getcwd()}/uploads'
-ALLOWED_EXTENSIONS = set(['xlsx'])
+ALLOWED_EXTENSIONS = set(['xlsx', 'xls'])
 
 app = flask.Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -38,7 +38,7 @@ def converter():
         output_1 = convert_func.convert_to_PC(id_code)
     else:
         output_1 = 'Введите идентификационный код'
-    
+
     product_code = flask.request.args.get('product_code')
     if product_code:
         output_2 = convert_func.convert_to_IC(product_code)
@@ -67,15 +67,17 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def parse_xlsx(filepath):
+    '''парсим excle файл, два поля gtin и quantity'''
     wb = load_workbook(filepath)
     ws = wb['Данные']
-    all_gtin = ws['B']
+    all_gtin = ws['A']
     all_gtin_list = []
-    all_quantity = ws['S']
+    all_quantity = ws['B']
     all_quantity_list = []
-    for row in all_gtin[6:-1]:
-        all_gtin_list.append(str(row.value))
-    for row in all_quantity[6:-1]:
+    for row in all_gtin[1:-1]:
+        gtin_with_lead_zero = string.zfill(str(row.value), 1)
+        all_gtin_list.append(gtin_with_lead_zero)
+    for row in all_quantity[1:-1]:
         all_quantity_list.append(str(row.value))
     return [all_gtin_list, all_quantity_list]
 
@@ -95,7 +97,7 @@ def user_file():
         gtin_and_quantity_lists = parse_xlsx(filepath)
         print(len(gtin_and_quantity_lists[0]))
         print(len(gtin_and_quantity_lists[1]))
-        
+
         # разделяем списки с gtin и quantity на мини списки (до 10 элементов в списке)
         # это нужно, из этих значений далее мы будем формировать "products" в xml 
         # максимально в "products" может быть 10 "product"
@@ -106,7 +108,7 @@ def user_file():
         # запаковываем в пары: [список из 10 gtin]:[список из 10 quantity]
         ten_gtin_and_quantity_pack = zip(separate_gtin_list, separate_quantity_list)
 
-        
+
         filepath = os.path.join(os.getcwd(), 'answers_dir')
         # циклом проходим по zip'у
         c = 0
@@ -129,4 +131,4 @@ def user_file():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0', port=41312)
