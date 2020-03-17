@@ -59,7 +59,7 @@ def user_input():
     order_dict = flask.request.form.to_dict(flat=False)
     print(order_dict)
     do_xml.xml_builder(order_dict)
-    path = "answer.xls"
+    path = "answer.xml"
     return flask.send_file(path, as_attachment=True)
 
 def allowed_file(filename):
@@ -136,4 +136,4 @@ def template():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=5050)
+    app.run(debug=False, host='0.0.0.0', port=5500)

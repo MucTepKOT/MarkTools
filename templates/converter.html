@@ -3,10 +3,16 @@
  <head>
   <meta content="charset=utf-8">
   <title>Marktools v1.0</title>
+  <style>hr {
+    border: none;
+    background-color: brown;
+    color: brown;
+    height: 1px;
+    }
+  </style>
  </head>
  <body>
   <h1>Конвертер кодов маркировки</h1>
-  <!-- Комментарий -->
   <p>
     <h4>Конвертировать идентификационный код в продуктовый:</h4>
     <form method="GET" enctype="text/plain">
@@ -15,7 +21,7 @@
     <p>{{ product_code }}</p>
     </form>
   </p>
-  <p>_______________________________________________________</p>
+  <hr>
   <p>
     <h4>Конвертировать продуктовый код в идентификационный:</h4>
     <form method="GET" enctype="text/plain">

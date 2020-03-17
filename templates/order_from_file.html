@@ -6,15 +6,13 @@
  </head>
  <body>
   <h1>Формирование xml для заказа кодов маркировки</h1>
-  <!-- Комментарий -->
     <form action="{{ url_for('user_file') }}" method="POST", enctype="multipart/form-data">
       <h4>Основные поля</h4>
-      <!-- <p>productGroupe <input type="text" name="productGroupe"></p> -->
       <p>
       <label for="productGroupe">productGroupe:</label>
       <select id="productGroupe" required name="productGroupe">
         <option selected disabled>Выберите из списка</option>
-        <option value="SHOES">SHOES</option>
+        <option value="shoes">shoes</option>
       </select>
       </p>
       <p>contactPerson <input type="text" name="contactPerson"></p>
@@ -29,11 +27,9 @@
         <label for="createMethodType">createMethodType:</label>
         <select id="createMethodType" required name="createMethodType">
           <option selected disabled>Выберите из списка</option>
-          <option value="SELF-MADE">SELF-MADE</option>
+          <option value="SELF_MADE">SELF_MADE</option>
         </select>
       </p>
-      <!-- <p>releaseMethodType <input type="text" name="releaseMethodType"></p> -->
-      <!-- <p>createMethodType <input type="text" name="createMethodType"></p> -->
       <p>contractNumber <input type="text" name="contractNumber"></p>
       <p>contractDate <input type="date" name="contractDate"></p>
       <input type="file" name="file" >
