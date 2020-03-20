@@ -2,6 +2,7 @@
 <html>
  <head>
   <meta content="charset=utf-8">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
   <title>Marktools v1.0</title>
   <style>hr {
     border: none;
@@ -12,22 +13,28 @@
   </style>
  </head>
  <body>
+  <p>
+    <center><a href="/"><img src="/static/images/main_logo.png" title='На главную' alt="Marktools"></a></center>
+  </p>
   <h1>Конвертер кодов маркировки</h1>
   <p>
     <h4>Конвертировать идентификационный код в продуктовый:</h4>
     <form method="GET" enctype="text/plain">
-    <p><input name="id_code"></p>
+    <p>Тип средства идентификации(hex): <input type="text" name="gcode_hex" value="444D"></p>
+    <p>Введите GTIN: <input type="text" name="gtin"></p>
+    <p>Введите SERIAL: <input type="text" name="serial"></p>
     <p><input type="submit" value="Конвертировать"></p>
-    <p>{{ product_code }}</p>
+    <p>PRODUCT_CODE: <span style="color: brown;">{{ product_code }}</span></p>
     </form>
   </p>
   <hr>
   <p>
     <h4>Конвертировать продуктовый код в идентификационный:</h4>
     <form method="GET" enctype="text/plain">
-    <p><input name="product_code"></p>
+    <p>Введите PRODUCT_CODE: <input name="product_code"></p>
     <p><input type="submit" value="Конвертировать"></p>
-    <p>{{ id_code }}</p>
+    <p>GTIN : <span style="color: brown;">{{ gtin }}</span></p>
+    <p>SERIAL: <span style="color: brown;">{{ serial }}</span></p>
     </form>
   </p>
   <p>

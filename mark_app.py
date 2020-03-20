@@ -33,18 +33,23 @@ def main_page():
 
 @app.route('/converter')
 def converter():
-    id_code = flask.request.args.get('id_code')
-    if id_code:
-        output_1 = convert_func.convert_to_PC(id_code)
+    gcode_hex = flask.request.args.get('gcode_hex')
+    gtin = flask.request.args.get('gtin')
+    serial = flask.request.args.get('serial')
+    if gtin and serial and gcode_hex:
+        output_1 = convert_func.convert_to_PC(gtin, serial, gcode_hex)
     else:
         output_1 = 'Введите идентификационный код'
 
     product_code = flask.request.args.get('product_code')
     if product_code:
-        output_2 = convert_func.convert_to_IC(product_code)
+        output_2_and_3 = convert_func.convert_to_IC(product_code)
+        output_2 = output_2_and_3[0]
+        output_3 = output_2_and_3[1]
     else:
-        output_2 = 'Введите продуктовый код'
-    return flask.render_template('converter.html', product_code=output_1, id_code=output_2)
+        output_2 = 'Нет данных'
+        output_3 = 'Нет данных'
+    return flask.render_template('converter.html', product_code=output_1, gtin=output_2, serial=output_3)
 
 @app.route('/simple_order', methods=['GET'])
 def simple_order():

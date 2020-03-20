@@ -2,9 +2,28 @@
 <html>
  <head>
   <meta content="charset=utf-8">
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='css/main.css') }}">
   <title>Marktools v1.0</title>
  </head>
  <body>
+  <p>
+    <center><a href="/"><img src="/static/images/main_logo.png" alt="Marktools"></a></center>
+  </p>
+  <center>
+  <div class="container">
+    <a href="{{ url_for('converter') }}"><img src="/static/images/converter.png" title="Конвертер кодов маркировки" alt="Конвертер" height="128"/></a>
+    <a></a>
+    <a href="{{ url_for('simple_order') }}"><img src="/static/images/simple_order.png" title="Сформировать xml для заказа кодов маркировки вручную (до 10 кодов)"  alt="Ручной режим" height="128"/></a>
+    <a></a>
+    <a href="{{ url_for('order_from_file') }}"><img src="/static/images/order_from_file.png" title="Сформировать xml для заказа кодов маркировки из файла (дохуя кодов из xlsx файла)" alt="Автомат из XLSX" height="128"/></a>
+  </div>
+  </center>
+  
+   <!-- <p>
+    <img src="/static/images/logo2.png" width="200" height="50" alt="Marktools">
+   </p>
    <p>
     <a href="{{ url_for('converter') }}"><b>Конвертер кодов маркировки</b></a>
    </p>
@@ -13,6 +32,6 @@
    </p>
    <p>
     <a href="{{ url_for('order_from_file') }}"><b>Сформировать xml для заказа кодов маркировки из файла (дохуя кодов из xlsx файла)</b></a>
-   </p>
+   </p> -->
  </body>
 </html>
