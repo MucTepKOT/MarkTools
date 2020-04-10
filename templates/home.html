@@ -14,10 +14,9 @@
   <center>
   <div class="container">
     <a href="{{ url_for('converter') }}"><img src="/static/images/converter.png" title="Конвертер кодов маркировки" alt="Конвертер" height="128"/></a>
-    <a></a>
     <a href="{{ url_for('simple_order') }}"><img src="/static/images/simple_order.png" title="Сформировать xml для заказа кодов маркировки вручную (до 10 кодов)"  alt="Ручной режим" height="128"/></a>
-    <a></a>
     <a href="{{ url_for('order_from_file') }}"><img src="/static/images/order_from_file.png" title="Сформировать xml для заказа кодов маркировки из файла (дохуя кодов из xlsx файла)" alt="Автомат из XLSX" height="128"/></a>
+    <a href="{{ url_for('km_cancellation') }}"><img src="/static/images/km_cancellation.png" title="Списание кодов маркировки" alt="Списание КИ" height="128"/></a>
   </div>
   </center>
  </body>

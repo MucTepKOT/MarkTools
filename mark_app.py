@@ -51,13 +51,17 @@ def converter():
         output_3 = 'Нет данных'
     return flask.render_template('converter.html', product_code=output_1, gtin=output_2, serial=output_3)
 
-@app.route('/simple_order', methods=['GET'])
+@app.route('/simple_order')
 def simple_order():
     return flask.render_template('simple_order.html')
 
-@app.route('/order_from_file', methods=['GET'])
+@app.route('/order_from_file')
 def order_from_file():
     return flask.render_template('order_from_file.html')
+
+@app.route('/km_cancellation')
+def km_cancellation():
+    return flask.render_template('km_cancellation.html')
 
 @app.route('/user_input', methods=['POST'])
 def user_input():
@@ -134,6 +138,8 @@ def user_file():
         return flask.send_file(path, as_attachment=True)
     return '404'
 
+
+
 @app.route('/template', methods=['GET'])
 def template():
     path = 'template.xlsx'
@@ -141,4 +147,4 @@ def template():
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=5500)
+    app.run(debug=True, host='0.0.0.0', port=5500)
