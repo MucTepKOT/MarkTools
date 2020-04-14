@@ -37,19 +37,23 @@ def converter():
     gtin = flask.request.args.get('gtin')
     serial = flask.request.args.get('serial')
     if gtin and serial and gcode_hex:
-        output_1 = convert_func.convert_to_PC(gtin, serial, gcode_hex)
+        convert_answer = convert_func.convert_to_PC(gtin, serial, gcode_hex)
+        output_1 = convert_answer[0]
+        output_3 = convert_answer[1]
     else:
-        output_1 = 'Введите идентификационный код'
+        output_1 = 'Нет данных'
+        output_3 = 'Нет данных'
 
     product_code = flask.request.args.get('product_code')
+    product_code_hex = flask.request.args.get('product_code_hex')
+    print(product_code_hex)
     if product_code:
-        output_2_and_3 = convert_func.convert_to_IC(product_code)
-        output_2 = output_2_and_3[0]
-        output_3 = output_2_and_3[1]
+        output_2 = convert_func.convert_to_IC(product_code=product_code)
+    elif product_code_hex:
+        output_2 = convert_func.convert_to_IC(product_code_hex=product_code_hex)
     else:
         output_2 = 'Нет данных'
-        output_3 = 'Нет данных'
-    return flask.render_template('converter.html', product_code=output_1, gtin=output_2, serial=output_3)
+    return flask.render_template('converter.html', product_code=output_1, id_code=output_2, pc_hex=output_3)
 
 @app.route('/simple_order')
 def simple_order():
@@ -147,4 +151,4 @@ def template():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5500)
+    app.run(debug=False, host='0.0.0.0', port=5500)

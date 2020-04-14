@@ -8,7 +8,7 @@
     border: none;
     background-color: brown;
     color: brown;
-    height: 1px;
+    height: 2px;
     }
   </style>
  </head>
@@ -25,18 +25,25 @@
     <p>Введите SERIAL: <input type="text" name="serial"></p>
     <p><input type="submit" value="Конвертировать"></p>
     <p>PRODUCT_CODE: <span style="color: brown;">{{ product_code }}</span></p>
+    <p>PRODUCT_CODE (HEX): <span style="color: brown;">{{ pc_hex }}</span></p>
     </form>
   </p>
+  <hr>
   <hr>
   <p>
     <h4>Конвертировать продуктовый код в идентификационный:</h4>
     <form method="GET" enctype="text/plain">
-    <p>Введите PRODUCT_CODE: <input name="product_code"></p>
-    <p><input type="submit" value="Конвертировать"></p>
-    <p>GTIN : <span style="color: brown;">{{ gtin }}</span></p>
-    <p>SERIAL: <span style="color: brown;">{{ serial }}</span></p>
+    <p>Введите Base64: <input name="product_code"></p>
+    <p><input type="submit" value="Конвертировать из Base64"></p>
     </form>
   </p>
+  <p>
+    <form method="GET" enctype="text/plain">
+      <p>Введите HEX: <input name="product_code_hex"></p>
+      <p><input type="submit" value="Конвертировать из HEX"></p>
+    </form>
+  </p>
+  <p>ID_CODE : <span style="color: brown;">{{ id_code }}</span></p>
   <p>
   <a href="{{ url_for('main') }}"><u>Вернуться на главную</u></a>
   </p>
